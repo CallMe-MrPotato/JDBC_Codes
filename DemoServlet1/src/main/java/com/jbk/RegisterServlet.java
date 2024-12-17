@@ -2,6 +2,9 @@ package com.jbk;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,6 +26,8 @@ public class RegisterServlet extends HttpServlet{
 	  System.out.println(Mobile);
 	  String Address = request.getParameter("Address1");
 	  System.out.println(Address);
+	  String Gender = request.getParameter("Gender1");
+	  System.out.println(Gender);
 	  String dob = request.getParameter("DOB1");
 	  System.out.println(dob);
 	  String city = request.getParameter("City1");
@@ -48,6 +53,7 @@ public class RegisterServlet extends HttpServlet{
 	 out.print(Email);
 	 out.print(Mobile);
 	 out.print(Address);
+	 out.print(Gender);
 	 out.print(dob);
 	 out.print(city);
 	 out.print(State);
@@ -56,6 +62,32 @@ public class RegisterServlet extends HttpServlet{
 	 out.print(Degree);
 	 out.print(Passing);
 	 out.print(pass);
+	 System.out.println("Data Inserted Successfully...");
+	 
+	 try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_197","root","root");
+		PreparedStatement ps = c.prepareStatement("insert into register(Firstname,Lastname,Email,MobileNo,Address,Gender,DOB,City,State,Country,Age,Degree,PassingYear,Password)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		ps.setString(1, Fname);
+		ps.setString(2, Lname);
+		ps.setString(3, Email);
+		ps.setString(4, Mobile);
+		ps.setString(5, Address);
+		ps.setString(6, Gender);
+		ps.setString(7, dob);
+		ps.setString(8, city);
+		ps.setString(9, State);
+		ps.setString(10, Country);
+		ps.setString(11, Age);
+		ps.setString(12, Degree);
+		ps.setString(13, Passing);
+		ps.setString(14, pass);
+		ps.executeUpdate();
+		System.out.println("Data is Inserted Successfully...");
+		c.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	 
 	}
 }
