@@ -9,12 +9,12 @@ public class Main {
 	public static void main(String[] args) {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
-		cfg.addAnnotatedClass(Hospital.class);
+		cfg.addAnnotatedClass(Banking.class);
 		SessionFactory sf = cfg.buildSessionFactory();
 		Session ss = sf.openSession();
 		Transaction ts = ss.beginTransaction();
 		
-		Hospital h = new Hospital();
+		Banking b = new Banking();
 		System.out.println("Application is Running...");
 	}
 
